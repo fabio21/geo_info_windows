@@ -1,7 +1,7 @@
 class TimezoneInfo {
   DateTime? datetime;
   int? day;
-  List<String>? fusoHorarioName;
+  List<String>? timeZones;
   String? id;
   int? month;
   String? name;
@@ -13,7 +13,7 @@ class TimezoneInfo {
   TimezoneInfo({
     this.datetime,
     this.day,
-    this.fusoHorarioName,
+    this.timeZones,
     this.id,
     this.month,
     this.name,
@@ -27,8 +27,8 @@ class TimezoneInfo {
     return TimezoneInfo(
       datetime: json['datetime'] != null ? DateTime.parse(json['datetime']) : null,
       day: json['day'] != null ? int.parse(json['day']) : null,
-      fusoHorarioName: json['fuso_horario_name'] != null
-          ? List<String>.from(json['fuso_horario_name'])
+      timeZones: json['time_zones'] != null
+          ? List<String>.from(json['time_zones'])
           : null,
       id: json['id'],
       month: json['month'] != null ? int.parse(json['month']) : null,
@@ -51,8 +51,8 @@ class TimezoneInfo {
     data['time_zone_name'] = timeZoneName;
     data['utc'] = utc;
     data['year'] = year;
-    if (fusoHorarioName != null) {
-      data['fuso_horario_name'] = fusoHorarioName;
+    if (timeZones != null) {
+      data['fuso_horario_name'] = timeZones;
     }
     return data;
   }

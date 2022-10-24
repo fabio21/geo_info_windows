@@ -11,6 +11,7 @@
     "hresult",
     "LANGID",
     "OFFICIALNAME",
+    "SYSGEOTYPE",
     "wconv",
     "winrt",
     "xplat"

@@ -86,11 +86,11 @@ class _MyAppState extends State<MyApp> {
     String value = "";
     switch (type) {
       case "GEO_NATION":
-         value = await _geoInfoPlugin.getNation() ?? "N/A";
+        value = await _geoInfoPlugin.getNation() ?? "N/A";
         return [getInfo(type, value)];
       case "GEO_LATITUDE":
-         value = await _geoInfoPlugin.getLatitude() ?? "N/A";
-         latitude = num.parse(value);
+        value = await _geoInfoPlugin.getLatitude() ?? "N/A";
+        latitude = num.parse(value);
         return [getInfo(type, value)];
       case "GEO_LONGITUDE":
         value = await _geoInfoPlugin.getLongitude() ?? "N/A";
@@ -142,19 +142,20 @@ class _MyAppState extends State<MyApp> {
         value = await _geoInfoPlugin.getId() ?? "N/A";
         return [getInfo(type, value)];
       case "GET_INFO_TIMEZONE":
-        TimezoneInfo s = await _geoInfoPlugin.getInfoTimezone() ?? TimezoneInfo();
-       return  [
-             getInfo("ID", s.id?.toString() ?? "N/A"),
-             getInfo("NAME", s.name ?? "N/A"),
-             getInfo("TIMEZONE - NAME", s.timeZoneName ?? "N/A"),
-             getInfo("Fuso Name", s.fusoHorarioName?.toString() ?? "N/A"),
-             getInfo("UTC", s.utc?.toString() ?? "N/A"),
-             getInfo("DATETIME", s.datetime?.toIso8601String() ?? "N/A"),
-             getInfo("TIME", s.time ?? "N/A"),
-             getInfo("DAY", s.day?.toString() ?? "N/A"),
-             getInfo("Month", s.month?.toString() ?? "N/A"),
-             getInfo("YEAR", s.year?.toString() ?? "N/A"),
-           ];
+        TimezoneInfo s =
+            await _geoInfoPlugin.getInfoTimezone() ?? TimezoneInfo();
+        return [
+          getInfo("ID", s.id?.toString() ?? "N/A"),
+          getInfo("NAME", s.name ?? "N/A"),
+          getInfo("TIMEZONE - NAME", s.timeZoneName ?? "N/A"),
+          getInfo("TIMEZONES", s.timeZones?.toString() ?? "N/A"),
+          getInfo("UTC", s.utc?.toString() ?? "N/A"),
+          getInfo("DATETIME", s.datetime?.toIso8601String() ?? "N/A"),
+          getInfo("TIME", s.time ?? "N/A"),
+          getInfo("DAY", s.day?.toString() ?? "N/A"),
+          getInfo("Month", s.month?.toString() ?? "N/A"),
+          getInfo("YEAR", s.year?.toString() ?? "N/A"),
+        ];
       case "GET_LOCALE_NAME":
         value = await _geoInfoPlugin.getLocaleName() ?? "N/A";
         return [getInfo(type, value)];
@@ -175,7 +176,7 @@ class _MyAppState extends State<MyApp> {
                 child: SelectableText('Running on: $_platformVersion\n'),
               )
             : ListView(
-          padding: const EdgeInsets.all(16),
+                padding: const EdgeInsets.all(16),
                 children: list,
               ),
       ),
@@ -189,11 +190,13 @@ class _MyAppState extends State<MyApp> {
       color: Colors.black12,
       child: SelectableText.rich(
         TextSpan(
-          style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w500, color: Colors.red),
+          style: const TextStyle(
+              fontSize: 16, fontWeight: FontWeight.w500, color: Colors.red),
           children: [
             TextSpan(
               text: "$name: ",
-              style: const TextStyle(fontWeight: FontWeight.w600, color: Colors.black),
+              style: const TextStyle(
+                  fontWeight: FontWeight.w600, color: Colors.black),
             ),
             TextSpan(text: value),
           ],
