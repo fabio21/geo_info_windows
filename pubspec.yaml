@@ -1,5 +1,7 @@
 name: geo_info
-description: A new Flutter plugin project.
+description: Geolocation information Windows
+homepage: https://github.com/fabio21
+repository: https://github.com/fabio21/geo_info_windows.git
 version: 0.0.1
 
 environment:
@@ -7,6 +9,7 @@ environment:
   flutter: ">=2.5.0"
 
 dependencies:
+  dartdoc: ^6.1.2
   flutter:
     sdk: flutter
   plugin_platform_interface: ^2.0.2

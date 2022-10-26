@@ -101,4 +101,9 @@ abstract class GeoInfoPlatform extends PlatformInterface {
   Future<String?> getInfoTimezone() {
     throw UnimplementedError('platformVersion() has not been implemented.');
   }
+
+  Future<String?> getGeoDeviceWinrt() {
+    throw UnimplementedError('platformVersion() has not been implemented.');
+  }
+
 }

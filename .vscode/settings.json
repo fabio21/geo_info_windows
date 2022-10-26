@@ -4,6 +4,7 @@
     "CURRENCYSYMBOL",
     "FRIENDLYNAME",
     "GEOCLASS",
+    "Geocoordinate",
     "Geolocator",
     "Geopos",
     "Geoposition",
@@ -93,6 +94,10 @@
     "format": "cpp",
     "forward_list": "cpp",
     "iomanip": "cpp",
-    "shared_mutex": "cpp"
-  }
+    "shared_mutex": "cpp",
+    "coroutine": "cpp",
+    "resumable": "cpp",
+    "fstream": "cpp"
+  },
+  "cmake.sourceDirectory": "${workspaceFolder}/windows"
 }

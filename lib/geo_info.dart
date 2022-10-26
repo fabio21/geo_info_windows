@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:geo_info/geolocation_device.dart';
 import 'package:geo_info/model_timezone.dart';
 import 'package:geo_info/timezone_name.dart';
 
@@ -124,7 +125,24 @@ class GeoInfo {
     }
   }
 
+  /// example pt-BR
   Future<String?> getLocaleName() async {
     return await GeoInfoPlatform.instance.getLocaleName();
+  }
+
+  /// Windows.Devices.Geolocation  latitude and longitude
+  /// GPS : within approximately 10 meters
+  /// Wi-Fi : between approximately 30 meters and 500 meters
+  /// Cell towers : between approximately 300 meters and 3,000 meters
+  /// IP address : between approximately 1,000 meters and 5,000 meters
+  Future<Geolocation?> getGeoDeviceWinrt() async {
+    String? map = await GeoInfoPlatform.instance.getGeoDeviceWinrt();
+    try {
+      var json = jsonDecode(map!);
+      return Geolocation.fromJson(json);
+    } catch (e) {
+      throw e.toString();
+    }
+    return null;
   }
 }

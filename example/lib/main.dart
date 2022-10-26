@@ -4,6 +4,7 @@ import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:geo_info/geo_info.dart';
+import 'package:geo_info/geolocation_device.dart';
 import 'package:geo_info/model_timezone.dart';
 import 'package:lat_lng_to_timezone/lat_lng_to_timezone.dart' as tzmap;
 
@@ -27,7 +28,8 @@ const geoInfo = [
   "GEO_NAME",
   "GEO_ID",
   "GET_INFO_TIMEZONE",
-  "GET_LOCALE_NAME"
+  "GET_LOCALE_NAME",
+  "GET_GEO_DEVICE_WIN_RT"
 ];
 
 void main() {
@@ -90,12 +92,12 @@ class _MyAppState extends State<MyApp> {
         return [getInfo(type, value)];
       case "GEO_LATITUDE":
         value = await _geoInfoPlugin.getLatitude() ?? "N/A";
-        latitude = num.parse(value);
+        // latitude = num.parse(value);
         return [getInfo(type, value)];
       case "GEO_LONGITUDE":
         value = await _geoInfoPlugin.getLongitude() ?? "N/A";
-        longitude = num.parse(value);
-        return [getInfo(type, value)];
+        // longitude = num.parse(value);
+         return [getInfo(type, value)];
       case "GEO_ISO2":
         value = await _geoInfoPlugin.getISO2() ?? "N/A";
         return [getInfo(type, value)];
@@ -158,6 +160,17 @@ class _MyAppState extends State<MyApp> {
         ];
       case "GET_LOCALE_NAME":
         value = await _geoInfoPlugin.getLocaleName() ?? "N/A";
+        return [getInfo(type, value)];
+      case "GET_GEO_DEVICE_WIN_RT":
+       Geolocation? geo = await _geoInfoPlugin.getGeoDeviceWinrt();
+       if(geo != null){
+         latitude = num.parse(geo.latitude.toString());
+         longitude = num.parse(geo.longitude.toString());
+         return[
+           getInfo("Latitude Device", geo.latitude?.toString() ?? "N/A"),
+           getInfo("Longitude Device", geo.longitude?.toString() ?? "N/A"),
+         ];
+       }
         return [getInfo(type, value)];
       default:
         return [getInfo(type, "Default")];

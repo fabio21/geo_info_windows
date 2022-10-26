@@ -127,6 +127,12 @@ class MockGeoInfoPlatform
     // TODO: implement getLocaleName
     throw UnimplementedError();
   }
+
+  @override
+  Future<String?> getGeoDeviceWinrt() {
+    // TODO: implement getGeoDeviceWinrt
+    throw UnimplementedError();
+  }
 }
 
 void main() {

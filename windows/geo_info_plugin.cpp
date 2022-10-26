@@ -21,16 +21,20 @@
 #include <codecvt>
 #include <iostream>
 #include <fstream>
-
-//#include <time.h>
-//#include <ctime>
-//#include <atlstr.h>
-#include <winrt/Windows.Devices.Geolocation.h>
-#include <winrt/base.h>
-#include <map>
-#include <windows.system.h>
 #include <coroutine>
 
+#include <winrt/Windows.Devices.Geolocation.h>
+#include <winrt/Windows.foundation.h>
+#include <winrt/base.h>
+#include <map>
+#include <winrt/windows.system.h>
+
+#include <future>
+
+using namespace winrt;
+using namespace Windows::Foundation;
+using namespace Windows::Devices::Geolocation;
+std::condition_variable cv;
 
 std::wstring string_to_wide_string(const std::string &string)
 {
@@ -66,6 +70,46 @@ std::string wide_string_to_string(const std::wstring &wide_string)
   std::string result(size_needed, 0);
   WideCharToMultiByte(CP_UTF8, 0, &wide_string.at(0), (int)wide_string.size(), &result.at(0), size_needed, nullptr, nullptr);
   return result;
+}
+
+std::string toMapString(std::map<std::string, double> value)
+{
+  std::stringstream stream;
+  stream << "{";
+  size_t count = value.size();
+  int last = 1;
+  for (auto pair : value)
+  {
+    stream << '"' << pair.first << '"' << ": " << '"' << pair.second << '"';
+
+    if (count > last)
+      stream << ", ";
+
+    last++;
+  }
+
+  stream << "}";
+
+  return stream.str();
+}
+
+concurrency::task<std::string> GeoDeviceWinrt()
+{
+
+  return concurrency::create_task([]
+                                  {
+        auto geo = Geolocator();
+        TimeSpan timeMax = std::chrono::milliseconds{10 };
+        TimeSpan timeOut = std::chrono::milliseconds{ 60000 };
+
+        Geoposition location{ geo.GetGeopositionAsync(timeMax, timeOut).get()};
+      
+        Geocoordinate coordinate = location.Coordinate();
+        std::map<std::string, double> value;
+        value.insert(std::pair<std::string, double>("latitude", coordinate.Latitude()));
+        value.insert(std::pair<std::string, double>("longitude", coordinate.Longitude()));
+
+       return toMapString(value); });
 }
 
 std::string GetLocaleName()
@@ -136,18 +180,17 @@ std::string GetInfoTimezone()
     last++;
   }
 
-   stream << "}";
+  stream << "}";
 
   return stream.str();
 }
- 
+
 std::string GeoInfo(int sysGeo)
 {
 
-
   GEOID myGEO = GetUserGeoID(GEOCLASS_NATION);
- // LCID lcid = GetUserDefaultLCID();
-  int sizeOfBuffer = GetGeoInfo(myGEO, sysGeo, NULL, 0,0);
+  // LCID lcid = GetUserDefaultLCID();
+  int sizeOfBuffer = GetGeoInfo(myGEO, sysGeo, NULL, 0, 0);
   TCHAR *outStr = new TCHAR[sizeOfBuffer];
   GetGeoInfo(myGEO, sysGeo, outStr, sizeOfBuffer, LANG_SYSTEM_DEFAULT);
   std::string value = wide_string_to_string(outStr);
@@ -155,7 +198,6 @@ std::string GeoInfo(int sysGeo)
   return value;
   ;
 }
-
 
 std::string GeoInfoEX(int sysGeo)
 {
@@ -204,7 +246,7 @@ namespace geo_info
     // std::wstring value;
     if (method_call.method_name().compare("getNation") == 0)
     {
-      result->Success(flutter::EncodableValue("DEPRECATED Not used by name API"));
+     result->Success(flutter::EncodableValue("DEPRECATED Not used by name API"));
     }
     else if (method_call.method_name().compare("getLatitude") == 0)
     {
@@ -281,9 +323,15 @@ namespace geo_info
     {
       result->Success(flutter::EncodableValue(GetInfoTimezone()));
     }
-      else if (method_call.method_name().compare("getLocaleName") == 0)
+    else if (method_call.method_name().compare("getLocaleName") == 0)
     {
       result->Success(flutter::EncodableValue(GetLocaleName()));
+    }
+    else if (method_call.method_name().compare("getGeoDeviceWinrt") == 0)
+    {
+      auto json{GeoDeviceWinrt()};
+      auto j = json.get();
+      result->Success(flutter::EncodableValue(j));
     }
     else
     {

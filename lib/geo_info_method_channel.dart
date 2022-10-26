@@ -124,4 +124,9 @@ class MethodChannelGeoInfo extends GeoInfoPlatform {
   Future<String?> getLocaleName() async {
     return await methodChannel.invokeMethod<String>('getLocaleName');
   }
+
+  @override
+  Future<String?> getGeoDeviceWinrt() async {
+    return await methodChannel.invokeMethod<String>('getGeoDeviceWinrt');
+  }
 }
