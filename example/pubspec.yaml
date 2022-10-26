@@ -17,7 +17,7 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-  lat_lng_to_timezone: ^0.2.0
+  #lat_lng_to_timezone: ^0.2.0
 
   geo_info:
     # When depending on this package from a real application you should use:

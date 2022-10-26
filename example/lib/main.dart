@@ -6,7 +6,7 @@ import 'package:flutter/services.dart';
 import 'package:geo_info/geo_info.dart';
 import 'package:geo_info/geolocation_device.dart';
 import 'package:geo_info/model_timezone.dart';
-import 'package:lat_lng_to_timezone/lat_lng_to_timezone.dart' as tzmap;
+//import 'package:lat_lng_to_timezone/lat_lng_to_timezone.dart' as tzmap;
 
 const geoInfo = [
   "GEO_NATION",
@@ -75,8 +75,8 @@ class _MyAppState extends State<MyApp> {
     // message was in flight, we want to discard the reply rather than calling
     // setState to update our non-existent appearance.
 
-    String tz = tzmap.latLngToTimezoneString(latitude, longitude);
-    log('TimeZone $tz.');
+    //String tz = tzmap.latLngToTimezoneString(latitude, longitude);
+   // log('TimeZone $tz.');
     if (!mounted) return;
 
     setState(() {

@@ -169,3 +169,11 @@ Starting with Windows 10, version 1709: The Windows geographical location identi
   according to the definition of your machine settings
   example:  pt-BR | en-us etc...
 ```
+
+## GET_GEO_DEVICE_WIN_RT
+
+> return
+
+```text
+Latitude and Longitude
+```
