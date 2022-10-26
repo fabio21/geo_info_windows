@@ -136,7 +136,7 @@ packages:
       path: ".."
       relative: true
     source: path
-    version: "0.0.1"
+    version: "0.0.2"
   glob:
     dependency: transitive
     description:
@@ -151,13 +151,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "0.15.1"
-  lat_lng_to_timezone:
-    dependency: "direct main"
-    description:
-      name: lat_lng_to_timezone
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "0.2.0"
   lints:
     dependency: transitive
     description:

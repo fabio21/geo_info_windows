@@ -116,7 +116,7 @@ class GeoInfo {
     try {
       var json = jsonDecode(map!);
       var info = TimezoneInfo.fromJson(json);
-      dynamic zone = TimezoneInfoMap[info.timeZoneName]?["zone"] ?? [];
+      dynamic zone = timeZoneInfoMap[info.timeZoneName]?["zone"] ?? [];
       info.timeZones = zone;
       return info;
     } catch (e) {
@@ -143,6 +143,5 @@ class GeoInfo {
     } catch (e) {
       throw e.toString();
     }
-    return null;
   }
 }

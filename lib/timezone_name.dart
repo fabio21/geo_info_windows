@@ -1,8 +1,5 @@
 
-
-import 'package:geo_info/model_timezone.dart';
-
-const TimezoneInfoMap = {
+const timeZoneInfoMap = {
   "Dateline Standard Time": {"utc":"-12:00", "zone": ["Linha de Data Internacional Oeste"]},
   "UTC-11": {"utc":"-11:00", "zone": ["Tempo Universal Coordenado-11"]},
   "Hawaiian Standard Time":{"utc":"-10:00", "zone": ["Havaí"]},

@@ -1,8 +1,9 @@
 name: geo_info
-description: Geolocation information Windows
+description: Internationalization for Windows Applications,
+  Windows.Devices.Geolocation Latitude and Longitude;
 homepage: https://github.com/fabio21
 repository: https://github.com/fabio21/geo_info_windows.git
-version: 0.0.1
+version: 0.0.2
 
 environment:
   sdk: '>=2.18.1 <3.0.0'
