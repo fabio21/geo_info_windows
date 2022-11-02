@@ -106,4 +106,13 @@ abstract class GeoInfoPlatform extends PlatformInterface {
     throw UnimplementedError('platformVersion() has not been implemented.');
   }
 
+   Future<String?> permissionGeoWinrt() {
+    throw UnimplementedError('platformVersion() has not been implemented.');
+  }
+
+  Future<String?> activateLocation() {
+    throw UnimplementedError('platformVersion() has not been implemented.');
+  }
+
+
 }

@@ -129,4 +129,14 @@ class MethodChannelGeoInfo extends GeoInfoPlatform {
   Future<String?> getGeoDeviceWinrt() async {
     return await methodChannel.invokeMethod<String>('getGeoDeviceWinrt');
   }
+  
+  @override
+  Future<String?> permissionGeoWinrt() async {
+    return await methodChannel.invokeMethod<String>('permissionGeoWinrt');
+  }
+
+  @override
+  Future<String?> activateLocation() async {
+    return await methodChannel.invokeMethod<String>('activateLocation');
+  }
 }

@@ -22,6 +22,7 @@
 #include <iostream>
 #include <fstream>
 #include <coroutine>
+#include <ctime>
 
 #include <winrt/Windows.Devices.Geolocation.h>
 #include <winrt/Windows.foundation.h>
@@ -93,12 +94,44 @@ std::string toMapString(std::map<std::string, double> value)
   return stream.str();
 }
 
+concurrency::task<bool> ActivateLocation()
+{
+ return concurrency::create_task([]{
+ auto result{ Windows::System::Launcher::LaunchUriAsync(Windows::Foundation::Uri(L"ms-settings:privacy-location"))};
+ return result.get(); 
+ });
+}
+
+concurrency::task<std::string> PermissionGeoWinrt()
+{
+
+  return concurrency::create_task([]
+                                  {
+        std::stringstream value;
+        auto geo = Geolocator();
+        auto request = geo.RequestAccessAsync();
+         GeolocationAccessStatus access{request.get()};
+        switch (access)
+        {
+        case GeolocationAccessStatus::Allowed:
+          value << "Allowed";
+          return value.str();
+        case GeolocationAccessStatus::Denied:
+          value << "Denied";
+          return value.str();
+        default:
+         value << "Unspecified";
+          return value.str();
+        } });
+}
+
 concurrency::task<std::string> GeoDeviceWinrt()
 {
 
   return concurrency::create_task([]
                                   {
         auto geo = Geolocator();
+        
         TimeSpan timeMax = std::chrono::milliseconds{10 };
         TimeSpan timeOut = std::chrono::milliseconds{ 60000 };
 
@@ -146,14 +179,19 @@ std::string GetInfoTimezone()
   GetLocalTime(&lt);
   SystemTimeToTzSpecificLocalTimeEx(&d_tz, &st, &lt);
   WCHAR time[250] = {0};
+  WCHAR date[350] = {0};
 
   GetTimeFormatEx(LOCALE_NAME_USER_DEFAULT, 0, &lt, L"HH':'mm':'ss tt", time, 250);
 
   std::string year = std::to_string((unsigned short)lt.wYear);
   std::string month = std::to_string((unsigned short)lt.wMonth);
   std::string day = std::to_string((unsigned short)lt.wDay);
+
   std::string timeE = wide_string_to_string(time);
-  std::string datetime = year + "-" + month + "-" + day + " " + timeE;
+  GetDateFormatEx(NULL, 0, &lt, L"yyyy'-'MM'-'dd", date, 350, NULL);
+  std::cout << date << std::endl;
+  std::string datetime(wide_string_to_string(date));
+  datetime += "T" + timeE;
 
   std::map<std::string, std::string> value;
 
@@ -246,7 +284,7 @@ namespace geo_info
     // std::wstring value;
     if (method_call.method_name().compare("getNation") == 0)
     {
-     result->Success(flutter::EncodableValue("DEPRECATED Not used by name API"));
+      result->Success(flutter::EncodableValue("DEPRECATED Not used by name API"));
     }
     else if (method_call.method_name().compare("getLatitude") == 0)
     {
@@ -308,7 +346,6 @@ namespace geo_info
     }
     else if (method_call.method_name().compare("getCurrencySymbol") == 0)
     {
-
       result->Success(flutter::EncodableValue(GeoInfo(GEO_CURRENCYSYMBOL)));
     }
     else if (method_call.method_name().compare("getName") == 0)
@@ -332,6 +369,18 @@ namespace geo_info
       auto json{GeoDeviceWinrt()};
       auto j = json.get();
       result->Success(flutter::EncodableValue(j));
+    }
+    else if (method_call.method_name().compare("permissionGeoWinrt") == 0)
+    {
+      auto perm{PermissionGeoWinrt()};
+      auto value = perm.get();
+      result->Success(flutter::EncodableValue(value));
+    }
+    else if (method_call.method_name().compare("activateLocation") == 0)
+    {
+      auto activation{ActivateLocation()};
+      activation.get();
+      result->Success(flutter::EncodableValue("activate"));
     }
     else
     {

@@ -133,6 +133,18 @@ class MockGeoInfoPlatform
     // TODO: implement getGeoDeviceWinrt
     throw UnimplementedError();
   }
+
+  @override
+  Future<String?> permissionGeoWinrt() {
+    // TODO: implement permissionGeoWinrt
+    throw UnimplementedError();
+  }
+
+  @override
+  Future<String?> activateLocation() {
+    // TODO: implement activateLocation
+    throw UnimplementedError();
+  }
 }
 
 void main() {

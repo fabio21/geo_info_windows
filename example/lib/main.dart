@@ -2,6 +2,8 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:geo_info/alert_location.dart';
+
 import 'package:geo_info/geo_info.dart';
 import 'package:geo_info/geolocation_device.dart';
 import 'package:geo_info/model_timezone.dart';
@@ -32,7 +34,7 @@ const geoInfo = [
 ];
 
 void main() {
-  runApp(const MyApp());
+  runApp(const MaterialApp(home: MyApp()));
 }
 
 class MyApp extends StatefulWidget {
@@ -48,10 +50,13 @@ class _MyAppState extends State<MyApp> {
 
   List<Widget> list = [];
   late num latitude, longitude;
+
   @override
   void initState() {
     super.initState();
-    initPlatformState();
+    if (mounted) {
+      initPlatformState();
+    }
   }
 
   // Platform messages are asynchronous, so we initialize in an async method.
@@ -70,17 +75,32 @@ class _MyAppState extends State<MyApp> {
       platformVersion = 'Failed to get platform version.';
     }
 
-    // If the widget was removed from the tree while the asynchronous platform
-    // message was in flight, we want to discard the reply rather than calling
-    // setState to update our non-existent appearance.
-
-    //String tz = tzmap.latLngToTimezoneString(latitude, longitude);
-   // log('TimeZone $tz.');
-    if (!mounted) return;
+     if (!mounted) return;
 
     setState(() {
       _platformVersion = platformVersion.trim();
     });
+
+
+
+  }
+
+  Future<void> _showMyDialog() async {
+    return showDialog(
+      context: context,
+      barrierDismissible: false, // user must tap button!
+      builder: (BuildContext context) {
+        return AlertLocationDialog(
+          action: (activate) async {
+            if(activate) {
+              await _geoInfoPlugin.activateLocation();
+            } else {
+              Navigator.of(context).pop();
+            }
+          },
+        );
+      },
+    );
   }
 
   Future<List<Widget>> getValue(String type) async {
@@ -96,7 +116,7 @@ class _MyAppState extends State<MyApp> {
       case "GEO_LONGITUDE":
         value = await _geoInfoPlugin.getLongitude() ?? "N/A";
         // longitude = num.parse(value);
-         return [getInfo(type, value)];
+        return [getInfo(type, value)];
       case "GEO_ISO2":
         value = await _geoInfoPlugin.getISO2() ?? "N/A";
         return [getInfo(type, value)];
@@ -161,19 +181,29 @@ class _MyAppState extends State<MyApp> {
         value = await _geoInfoPlugin.getLocaleName() ?? "N/A";
         return [getInfo(type, value)];
       case "GET_GEO_DEVICE_WIN_RT":
-       Geolocation? geo = await _geoInfoPlugin.getGeoDeviceWinrt();
-       if(geo != null){
-         latitude = num.parse(geo.latitude.toString());
-         longitude = num.parse(geo.longitude.toString());
-         return[
-           getInfo("Latitude Device", geo.latitude?.toString() ?? "N/A"),
-           getInfo("Longitude Device", geo.longitude?.toString() ?? "N/A"),
-         ];
-       }
-        return [getInfo(type, value)];
+        if (await _geoInfoPlugin.permissionGeoWinrt()) {
+          return await getInfoLongitudeAndLatitude(type, value);
+        } else {
+          return [TextButton(onPressed: () => _showMyDialog(), child: const Text("Activate location"))];
+        }
       default:
         return [getInfo(type, "Default")];
     }
+  }
+
+
+  Future<List<Widget>> getInfoLongitudeAndLatitude(
+      String type, String value) async {
+    Geolocation? geo = await _geoInfoPlugin.getGeoDeviceWinrt();
+    if (geo != null) {
+      latitude = num.parse(geo.latitude.toString());
+      longitude = num.parse(geo.longitude.toString());
+      return [
+        getInfo("Latitude Device", geo.latitude?.toString() ?? "N/A"),
+        getInfo("Longitude Device", geo.longitude?.toString() ?? "N/A"),
+      ];
+    }
+    return [getInfo(type, value)];
   }
 
   @override
@@ -217,3 +247,4 @@ class _MyAppState extends State<MyApp> {
     );
   }
 }
+
