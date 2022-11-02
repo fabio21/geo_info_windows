@@ -25,7 +25,8 @@ class TimezoneInfo {
 
   factory TimezoneInfo.fromJson(Map<String, dynamic> json) {
     return TimezoneInfo(
-      datetime: json['datetime'] != null ? DateTime.parse(json['datetime']) : null,
+      datetime:
+          json['datetime'] != null ? DateTime.parse(json['datetime']) : null,
       day: json['day'] != null ? int.parse(json['day']) : null,
       timeZones: json['time_zones'] != null
           ? List<String>.from(json['time_zones'])

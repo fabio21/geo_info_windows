@@ -16,7 +16,7 @@ class MethodChannelGeoInfo extends GeoInfoPlatform {
 
   @override
   Future<String?> getCurrencySymbol() async {
-   return await methodChannel.invokeMethod<String>('getCurrencySymbol');
+    return await methodChannel.invokeMethod<String>('getCurrencySymbol');
   }
 
   @override
@@ -129,7 +129,7 @@ class MethodChannelGeoInfo extends GeoInfoPlatform {
   Future<String?> getGeoDeviceWinrt() async {
     return await methodChannel.invokeMethod<String>('getGeoDeviceWinrt');
   }
-  
+
   @override
   Future<String?> permissionGeoWinrt() async {
     return await methodChannel.invokeMethod<String>('permissionGeoWinrt');

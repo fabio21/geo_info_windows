@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 
-
 class AlertLocationDialog extends StatelessWidget {
   final Function(bool activate) action;
   final String title, description;
 
-  const AlertLocationDialog({Key? key,
+  const AlertLocationDialog({
+    Key? key,
     required this.action,
     this.title = "Location is disabled!!",
     this.description = "Must enable to have use of the feature in the app!",

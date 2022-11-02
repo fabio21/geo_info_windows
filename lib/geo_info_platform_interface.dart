@@ -22,6 +22,7 @@ abstract class GeoInfoPlatform extends PlatformInterface {
     PlatformInterface.verifyToken(instance, _token);
     _instance = instance;
   }
+
   ///DEPRECATED Not used by name API
   Future<String?> getNation() {
     throw UnimplementedError('platformVersion() has not been implemented.');
@@ -34,16 +35,20 @@ abstract class GeoInfoPlatform extends PlatformInterface {
   Future<String?> getLongitude() {
     throw UnimplementedError('platformVersion() has not been implemented.');
   }
+
   Future<String?> getISO2() {
     throw UnimplementedError('platformVersion() has not been implemented.');
   }
+
   Future<String?> getISO3() {
     throw UnimplementedError('platformVersion() has not been implemented.');
   }
+
   ///DEPRECATED and misleading, not used by name API
   Future<String?> getRFC1766() {
     throw UnimplementedError('platformVersion() has not been implemented.');
   }
+
   ///DEPRECATED Not used by name API
   Future<String?> getLCID() {
     throw UnimplementedError('platformVersion() has not been implemented.');
@@ -56,10 +61,12 @@ abstract class GeoInfoPlatform extends PlatformInterface {
   Future<String?> getOfficialName() {
     throw UnimplementedError('platformVersion() has not been implemented.');
   }
+
   ///Not implemented
   Future<String?> getTimezone() {
     throw UnimplementedError('platformVersion() has not been implemented.');
   }
+
   ///Not implemented
   Future<String?> getOfficialLanguages() {
     throw UnimplementedError('platformVersion() has not been implemented.');
@@ -72,6 +79,7 @@ abstract class GeoInfoPlatform extends PlatformInterface {
   Future<String?> getParent() {
     throw UnimplementedError('platformVersion() has not been implemented.');
   }
+
   /// return: [55]
   Future<String?> getDialingCode() {
     throw UnimplementedError('platformVersion() has not been implemented.');
@@ -81,6 +89,7 @@ abstract class GeoInfoPlatform extends PlatformInterface {
   Future<String?> getCurrencyCode() {
     throw UnimplementedError('platformVersion() has not been implemented.');
   }
+
   /// Return: [$]
   Future<String?> getCurrencySymbol() {
     throw UnimplementedError('platformVersion() has not been implemented.');
@@ -89,6 +98,7 @@ abstract class GeoInfoPlatform extends PlatformInterface {
   Future<String?> getName() {
     throw UnimplementedError('platformVersion() has not been implemented.');
   }
+
   /// DEPRECATED - For compatibility, please avoid
   Future<String?> getId() {
     throw UnimplementedError('platformVersion() has not been implemented.');
@@ -106,13 +116,11 @@ abstract class GeoInfoPlatform extends PlatformInterface {
     throw UnimplementedError('platformVersion() has not been implemented.');
   }
 
-   Future<String?> permissionGeoWinrt() {
+  Future<String?> permissionGeoWinrt() {
     throw UnimplementedError('platformVersion() has not been implemented.');
   }
 
   Future<String?> activateLocation() {
     throw UnimplementedError('platformVersion() has not been implemented.');
   }
-
-
 }

@@ -7,7 +7,6 @@ import 'package:geo_info/alert_location.dart';
 import 'package:geo_info/geo_info.dart';
 import 'package:geo_info/geolocation_device.dart';
 import 'package:geo_info/model_timezone.dart';
-//import 'package:lat_lng_to_timezone/lat_lng_to_timezone.dart' as tzmap;
 
 const geoInfo = [
   "GEO_NATION",

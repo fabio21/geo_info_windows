@@ -6,8 +6,10 @@ class Geolocation {
 
   factory Geolocation.fromJson(Map<String, dynamic> json) {
     return Geolocation(
-      latitude: json["latitude"] != null ? double.parse(json["latitude"]) : null,
-      longitude: json["longitude"] != null ? double.parse(json["longitude"]) : null,
+      latitude:
+          json["latitude"] != null ? double.parse(json["latitude"]) : null,
+      longitude:
+          json["longitude"] != null ? double.parse(json["longitude"]) : null,
     );
   }
 

@@ -176,4 +176,6 @@ Starting with Windows 10, version 1709: The Windows geographical location identi
 
 ```text
 Latitude and Longitude
+Check permission location
+Open view enable location
 ```

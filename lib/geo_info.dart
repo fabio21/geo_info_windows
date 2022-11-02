@@ -145,19 +145,17 @@ class GeoInfo {
     }
   }
 
-
   ///Check if location is active
   ///return true or disabled false
   Future<bool> permissionGeoWinrt() async {
     String? map = await GeoInfoPlatform.instance.permissionGeoWinrt();
     return GeoPermissionWinrt.Allowed.name.contains(map ?? "");
-
   }
- ///Call screen to activate location
+
+  ///Call screen to activate location
   Future<void> activateLocation() async {
     await GeoInfoPlatform.instance.activateLocation();
   }
 }
 
 enum GeoPermissionWinrt { Allowed, Denied, Unspecified }
-
